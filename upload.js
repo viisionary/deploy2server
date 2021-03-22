@@ -30,7 +30,7 @@ const doDeploy =  ({
 		const conn = new Client();
 		conn.on('ready', () => {
 			conn.sftp((err, sftp) => {
-				const loading = ora(projectName + 'tar uploading...');
+				const loading = ora(projectName + '.tar uploading...');
 				loading.start();
 				if (err) throw err;
 				sftp.fastPut(localTarPath, serverTarPath, {
@@ -40,7 +40,7 @@ const doDeploy =  ({
 						if (total_transferred < total) {
 						}
 					}
-				},  (err) => {
+				}, (err) => {
 					if (err) throw err;
 					conn.exec(`rm -rf ${serverCodePath}/* && tar -xvf ${serverTarPath} -C ${serverBaseCodePath} && cp -r ${serverCodePath}/* ${serverSitePath}/`, async function (err1, stream) {
 						loading.stop();
